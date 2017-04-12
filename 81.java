@@ -13,6 +13,53 @@ Write a function to determine if a given target is in the array.
 The array may contain duplicates.
 */
 
+//Correct answer
+public class Solution {
+    public boolean search(int[] nums, int target) {
+        if(nums == null||nums.length==0)
+        {
+            return false;
+        }
+        int a = 0;
+        int b = nums.length-1;
+        while(a<b)
+        {
+            final int mid = (a+b)/2;
+            if(nums[mid] == target)
+            {
+                return true;
+            }
+            if(nums[mid]>nums[b])//First half is in order
+            {
+                if(nums[mid]>target && nums[a] <= target)
+                {
+                    b = mid;
+                }
+                else
+                {
+                    a = mid + 1;
+                }
+            }
+            else if(nums[mid]<nums[b])//Second half is in order
+            {
+                if(nums[mid]<target && nums[b] >= target)
+                {
+                    a = mid + 1;
+                }
+                else
+                {
+                    b = mid;
+                }
+            }
+            else //equals
+            {
+                b--;
+            }
+        }
+        return nums[a] == target;
+    }
+}
+
 //Wrong answer
 public class Solution {
     public boolean search(int[] nums, int target) {
@@ -39,7 +86,7 @@ public class Solution {
             }
         }
         
-        final int pivot = a;
+        final int pivot = a;//Reason is because this is not the last min value!
         int lower = 0;
         int upper = nums.length-1;
         while(lower<upper)
