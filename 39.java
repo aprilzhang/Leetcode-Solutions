@@ -14,9 +14,34 @@ A solution set is:
   [2, 2, 3]
 ]
 */
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] nums, int target) {
+        final List<List<Integer>> list = new ArrayList<>();
+        backtrack(list, new ArrayList<>(), 0, nums, 0,target);
+        return list;
+    }
+    
+    private void backtrack(List<List<Integer>> list , List<Integer> tempList, int tempSum,
+        int[] nums, int start, int target)
+    {
+        if(tempSum>target)
+        {
+            return;
+        }
+        if(tempSum==target)
+        {
+            list.add(new ArrayList<>(tempList));
+            return;
+        }
+        for(int i = start; i < nums.length; i++){
+            tempList.add(nums[i]);
+            backtrack(list, tempList,tempSum+nums[i], nums, i ,target);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
 
-
-
+//My first draft, accepted but super slow!
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         final List<List<Integer>> result = new ArrayList<>();
