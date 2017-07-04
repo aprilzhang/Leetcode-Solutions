@@ -35,6 +35,10 @@ public class Solution {
 //my failed solution
 //[".87654321","2........","3........","4........","5........","6........","7........","8........","9........"]
 //Why this should return true?
+
+//This is because
+//The question says A valid Sudoku board (partially filled) is not necessarily solvable.
+//Only the filled cells need to be validated.
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
         if(board==null)

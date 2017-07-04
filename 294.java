@@ -9,29 +9,60 @@ For example, given s = "++++", return true. The starting player can guarantee a 
 Follow up:
 Derive your algorithm's runtime complexity.
 */
+//My solution doesnt work
+//e.g. "+++++++++++" should be true
 public class Solution {
     public boolean canWin(String s) {
-        if(s==null||s.length()<2)
+        if(s==null)
         {
             return false;
         }
-
-        for(int i =0;i<s.length()-1;i++)
+        return canWin(s,0);
+    }
+    
+    
+    public boolean canWin(String s, int start) {
+        if(start>=s.length())
         {
-            if(s.charAt(i)=='+'&&s.charAt(i+1)=='+')
+            return false;
+        }
+        
+        int i =start;
+        while(i<s.length())
+        {
+            if(s.startsWith("+++",i))
             {
-                final String newString = new StringBuilder()
-                                        .append(s.substring(0,i))
-                                        .append("--")
-                                        .append(s.substring(i+2))
-                                        .toString();
-                if(!canWin(newString))
-                {
-                    return true;
-                }
+                return !canWin(s,i+2)||!canWin(s,i+3);
             }
+            else if (s.startsWith("++",i))
+            {
+                return !canWin(s,i+3);
+            }
+            i++;
         }
         return false;
+    }
+}
+
+//Backtracking
+//o(n!!)
+public class Solution {
+    public boolean canWin(String s) {
+      if (s == null || s.length() < 2) {
+        return false;
+      }
+
+      for (int i = 0; i < s.length() - 1; i++) {
+        if (s.startsWith("++", i)) {
+          String t = s.substring(0, i) + "--" + s.substring(i + 2);
+
+          if (!canWin(t)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
 }
 
