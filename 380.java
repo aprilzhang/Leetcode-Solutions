@@ -31,6 +31,67 @@ randomSet.insert(2);
 // Since 2 is the only number in the set, getRandom always return 2.
 randomSet.getRandom();
 */
+//My solution, very fast
+public class RandomizedSet {
+    private List<Integer> values = new ArrayList<>();
+    private Map<Integer,Integer> positions = new HashMap<>();
+    private final Random random = new Random();
+    
+    /** Initialize your data structure here. */
+    public RandomizedSet() {
+        
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+        if(positions.containsKey(val))
+        {
+            return false;
+        }
+        values.add(val);
+        positions.put(val,values.size()-1);
+        return true;
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if(!positions.containsKey(val))
+        {
+            return false;
+        }
+        int valPosition = positions.get(val);
+        positions.remove(val,valPosition);
+
+        int lastVal = values.remove(values.size()-1);
+        if(lastVal!=val)
+        {
+            positions.put(lastVal,valPosition);
+            values.set(valPosition,lastVal);
+        }
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    public int getRandom() {
+        if(values.isEmpty())
+        {
+            return -1;
+        }
+        int ran = random.nextInt(positions.size());
+        return values.get(ran);
+    }
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
+ 
+ 
+
 public class RandomizedSet {
     private final Random random = new Random();
     private final List<Integer> list = new ArrayList<>();
